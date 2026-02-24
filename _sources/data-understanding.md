@@ -25,3 +25,89 @@ Proses pemahaman data mencakup empat komponen yang saling berkaitan:
 ### Struktur Data dan Seleksi Fitur
 
 Data tabular tersusun dalam bentuk baris (record) dan kolom (fitur). Tidak semua kolom yang tersedia diperlukan dalam analisis, sehingga dilakukan seleksi fitur untuk menyisakan hanya variabel yang relevan dan berkontribusi terhadap tujuan pemodelan.
+
+
+# DATA UNDERSTANDING DAN EKSPLORASI DATA IRIS
+
+Notebook ini berisi proses eksplorasi dataset Iris menggunakan Python (Google Colab).
+Tahapan meliputi:
+- Pemeriksaan kualitas data
+- Analisis korelasi
+- Statistik deskriptif
+- Clustering (K-Means)
+- Klasifikasi (KNN)
+
+## 1. Import Library
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+## 2. Load Dataset Iris
+
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df['species'] = iris.target
+df.head()
+
+## 3. Pemeriksaan Kualitas Data
+
+print("Missing Values:")
+print(df.isnull().sum())
+
+print("\nJumlah Data Duplikat:")
+print(df.duplicated().sum())
+
+## 4. Statistik Deskriptif
+df.describe()
+### Histogram Distribusi Fitur
+
+df.iloc[:, :4].hist()
+plt.show()
+
+## 5. Analisis Korelasi
+
+corr = df.iloc[:, :4].corr()
+corr
+
+
+plt.figure()
+sns.heatmap(corr, annot=True)
+plt.title("Correlation Matrix Iris Dataset")
+plt.show()
+
+## 6. Clustering Menggunakan K-Means
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+df['cluster'] = kmeans.fit_predict(df.iloc[:, :4])
+df[['species','cluster']].head()
+
+## 7. Klasifikasi Menggunakan KNN
+
+X = df.iloc[:, :4]
+y = df['species']
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+
+print("Confusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))

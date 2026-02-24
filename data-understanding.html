@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -183,6 +183,7 @@
 <li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
+
 </ul>
 
     </div>
@@ -378,6 +379,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Understanding</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-dasar">Konsep Dasar</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-dan-kebersihan-data">Kualitas dan Kebersihan Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komponen-utama-memahami-data">Komponen Utama Memahami Data</a></li>
@@ -385,6 +387,22 @@ document.write(`
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-dan-eksplorasi-data-iris">DATA UNDERSTANDING DAN EKSPLORASI DATA IRIS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">1. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dataset-iris">2. Load Dataset Iris</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-kualitas-data">3. Pemeriksaan Kualitas Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">4. Statistik Deskriptif</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-distribusi-fitur">Histogram Distribusi Fitur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-korelasi">5. Analisis Korelasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-menggunakan-k-means">6. Clustering Menggunakan K-Means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-menggunakan-knn">7. Klasifikasi Menggunakan KNN</a></li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -423,6 +441,84 @@ document.write(`
 <h3>Struktur Data dan Seleksi Fitur<a class="headerlink" href="#struktur-data-dan-seleksi-fitur" title="Link to this heading">#</a></h3>
 <p>Data tabular tersusun dalam bentuk baris (record) dan kolom (fitur). Tidak semua kolom yang tersedia diperlukan dalam analisis, sehingga dilakukan seleksi fitur untuk menyisakan hanya variabel yang relevan dan berkontribusi terhadap tujuan pemodelan.</p>
 </section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="data-understanding-dan-eksplorasi-data-iris">
+<h1>DATA UNDERSTANDING DAN EKSPLORASI DATA IRIS<a class="headerlink" href="#data-understanding-dan-eksplorasi-data-iris" title="Link to this heading">#</a></h1>
+<p>Notebook ini berisi proses eksplorasi dataset Iris menggunakan Python (Google Colab).
+Tahapan meliputi:</p>
+<ul class="simple">
+<li><p>Pemeriksaan kualitas data</p></li>
+<li><p>Analisis korelasi</p></li>
+<li><p>Statistik deskriptif</p></li>
+<li><p>Clustering (K-Means)</p></li>
+<li><p>Klasifikasi (KNN)</p></li>
+</ul>
+<section id="import-library">
+<h2>1. Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<p>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns</p>
+<p>from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report</p>
+</section>
+<section id="load-dataset-iris">
+<h2>2. Load Dataset Iris<a class="headerlink" href="#load-dataset-iris" title="Link to this heading">#</a></h2>
+<p>iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df[‘species’] = iris.target
+df.head()</p>
+</section>
+<section id="pemeriksaan-kualitas-data">
+<h2>3. Pemeriksaan Kualitas Data<a class="headerlink" href="#pemeriksaan-kualitas-data" title="Link to this heading">#</a></h2>
+<p>print(“Missing Values:”)
+print(df.isnull().sum())</p>
+<p>print(“\nJumlah Data Duplikat:”)
+print(df.duplicated().sum())</p>
+</section>
+<section id="statistik-deskriptif">
+<h2>4. Statistik Deskriptif<a class="headerlink" href="#statistik-deskriptif" title="Link to this heading">#</a></h2>
+<p>df.describe()</p>
+<section id="histogram-distribusi-fitur">
+<h3>Histogram Distribusi Fitur<a class="headerlink" href="#histogram-distribusi-fitur" title="Link to this heading">#</a></h3>
+<p>df.iloc[:, :4].hist()
+plt.show()</p>
+</section>
+</section>
+<section id="analisis-korelasi">
+<h2>5. Analisis Korelasi<a class="headerlink" href="#analisis-korelasi" title="Link to this heading">#</a></h2>
+<p>corr = df.iloc[:, :4].corr()
+corr</p>
+<p>plt.figure()
+sns.heatmap(corr, annot=True)
+plt.title(“Correlation Matrix Iris Dataset”)
+plt.show()</p>
+</section>
+<section id="clustering-menggunakan-k-means">
+<h2>6. Clustering Menggunakan K-Means<a class="headerlink" href="#clustering-menggunakan-k-means" title="Link to this heading">#</a></h2>
+<p>kmeans = KMeans(n_clusters=3, random_state=42)
+df[‘cluster’] = kmeans.fit_predict(df.iloc[:, :4])
+df[[‘species’,’cluster’]].head()</p>
+</section>
+<section id="klasifikasi-menggunakan-knn">
+<h2>7. Klasifikasi Menggunakan KNN<a class="headerlink" href="#klasifikasi-menggunakan-knn" title="Link to this heading">#</a></h2>
+<p>X = df.iloc[:, :4]
+y = df[‘species’]</p>
+<p>X_train, X_test, y_train, y_test = train_test_split(
+X, y, test_size=0.3, random_state=42
+)</p>
+<p>model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)</p>
+<p>y_pred = model.predict(X_test)</p>
+<p>print(“Accuracy:”, accuracy_score(y_test, y_pred))</p>
+<p>print(“Confusion Matrix:”)
+print(confusion_matrix(y_test, y_pred))</p>
+<p>print(“\nClassification Report:”)
+print(classification_report(y_test, y_pred))</p>
 </section>
 </section>
 
@@ -481,6 +577,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Data Understanding</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konsep-dasar">Konsep Dasar</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kualitas-dan-kebersihan-data">Kualitas dan Kebersihan Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komponen-utama-memahami-data">Komponen Utama Memahami Data</a></li>
@@ -488,6 +585,22 @@ document.write(`
 </ul>
 </li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#data-understanding-dan-eksplorasi-data-iris">DATA UNDERSTANDING DAN EKSPLORASI DATA IRIS</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">1. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dataset-iris">2. Load Dataset Iris</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-kualitas-data">3. Pemeriksaan Kualitas Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-deskriptif">4. Statistik Deskriptif</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-distribusi-fitur">Histogram Distribusi Fitur</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-korelasi">5. Analisis Korelasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-menggunakan-k-means">6. Clustering Menggunakan K-Means</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#klasifikasi-menggunakan-knn">7. Klasifikasi Menggunakan KNN</a></li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
